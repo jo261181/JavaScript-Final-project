@@ -5,7 +5,7 @@ const prompt = require('prompt-sync')();
 
 // Your code here
 
-let QuestionUserToFindAMatch = prompt("Please; give a correct answer to the following question to find your perfect match! Press Enter to begin. ");
+let QuestionUserToFindAMatch = prompt("Please; give a correct answer to the following question to find your perfect match! Press Enter to begin.\n");
 
 let profileUser = {}
 profileUser.Name = prompt("What is your first name? ").trim();
@@ -17,7 +17,6 @@ profileUser.location = prompt("Rural / City? ").toLowerCase().trim();
 profileUser.min_age_interest = prompt("What is the minimal age that you would like to date? ").trim();
 profileUser.max_age_interest = prompt("What is the maximal age that you would like to date? ").trim()
 
-console.log(profileUser);
 
 // naam
 while (!profileUser.Name || profileUser.Name.trim() === " ") {
@@ -66,23 +65,27 @@ while (isNaN(profileUser.min_age_interest) || isNaN(profileUser.max_age_interest
     profileUser.max_age_interest = prompt("What is the maximal age that you would like to date? (70 or younger)").trim();
 }
 
-
 const minAgeInterest = Number(profileUser.min_age_interest);
 const maxAgeInterest = Number(profileUser.max_age_interest);
 
 // Filter kandidaten
 const filteredData = mockData.filter(candidate => {
-    return candidate.age >= minAgeInterest && candidate.age <= maxAgeInterest
-        && (profileUser.gender_interest === "X" || candidate.gender === profileUser.gender_interest)
-        && candidate.location === profileUser.location;
+    const ageMatch = candidate.age >= minAgeInterest && candidate.age <= maxAgeInterest;
+    const genderMatch = profileUser.gender_interest === "X"
+        ? true
+        : candidate.gender === profileUser.gender_interest;
+
+    // Controleer of de locatie overeenkomt
+    const locationMatch = candidate.location === profileUser.location;
+
+    // Combineer alle voorwaarden
+    return ageMatch && genderMatch && locationMatch;
 });
 
-
-
 if (filteredData.length > 0) {
-    console.log(`found ${filteredData.length} Potential matches:`);
+    console.log(`\nfound ${filteredData.length} Potential matches:`);
     filteredData.forEach(candidate => {
-        console.log(`${candidate.first_name} ${candidate.last_name}, ${candidate.age} years old, Gender: ${candidate.gender}, Location: ${candidate.location}`);
+        console.log(`♥  ${candidate.first_name} ${candidate.last_name}, ${candidate.age} years old, Gender: ${candidate.gender}, Location: ${candidate.location}`);
     });
 
 } else {
