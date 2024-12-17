@@ -5,7 +5,7 @@ const prompt = require('prompt-sync')();
 
 // Your code here
 
-let QuestionUserToFindAMatch = prompt("Please; give a correct answer to the following question to find your perfect match! Press Enter to begin.\n");
+let QuestionUserToFindAMatch = prompt("Please; give a correct answer to the following questions to find your perfect match! Press Enter to begin.\n");
 
 let profileUser = {}
 profileUser.Name = prompt("What is your first name? ").trim();
